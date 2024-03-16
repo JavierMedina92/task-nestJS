@@ -18,6 +18,7 @@ getAllTasks() {
  return this.tasks;
 }
 
+
 createTask(title:string, description: string) {
     const task = {
         id: v4(),
@@ -28,13 +29,21 @@ createTask(title:string, description: string) {
     this.tasks.push(task)
 
     return task;
-}
-updateTasks() {
-    
+ }
+ 
+deleteTask(id: string){
+   this.tasks = this.tasks.filter(task => task.id !== id)
+ }
+
+getTaskById(id: string): Task {
+    return this.tasks.find(task => task.id === id)
 }
 
-deleteTasks() {
-
-}
+updateTask(id: string, updatedFields: any) {
+    const task = this.getTaskById(id)
+    const newTask = Object.assign(task, updatedFields)
+    this.tasks = this.tasks.map(task => task.id === id ? newTask : task);
+    return newTask;
+ }
 
 }

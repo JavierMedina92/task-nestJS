@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -10,16 +10,15 @@ export class UsersService {
 
     constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-    createUser(user: CreateUserDto) {
-
-        const userFound = this.userRepository.findOne({
+    async createUser(user: CreateUserDto) {
+        const userFound = await this.userRepository.findOne({
             where: {
                 username: user.username
             }
         })
 
         if (userFound) {
-            return
+            return new HttpException('El Usuario Ya Existe', HttpStatus.CONFLICT)
         }
 
 
@@ -31,12 +30,16 @@ export class UsersService {
         return this.userRepository.find()
     }
 
-    getUser(id: number) {
-        return this.userRepository.findOne ({
+    async getUser(id: number) {
+        const userFound = await this.userRepository.findOne ({
             where: {
                 id
-            }
-        })
+            },
+        });
+
+        if (!userFound) {
+            return new HttpException('El Usuario No Existe', HttpStatus.NOT_FOUND)
+        }
     }
 
     deleteUser(id: number) {

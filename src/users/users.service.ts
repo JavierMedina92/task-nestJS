@@ -11,6 +11,18 @@ export class UsersService {
     constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
     createUser(user: CreateUserDto) {
+
+        const userFound = this.userRepository.findOne({
+            where: {
+                username: user.username
+            }
+        })
+
+        if (userFound) {
+            return
+        }
+
+
        const newUser = this.userRepository.create(user)
        return this.userRepository.save(newUser)
     }

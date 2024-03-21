@@ -33,17 +33,25 @@ export class UsersService {
     async getUser(id: number) {
         const userFound = await this.userRepository.findOne ({
             where: {
-                id
+                id,
             },
         });
 
         if (!userFound) {
             return new HttpException('El Usuario No Existe', HttpStatus.NOT_FOUND)
         }
+
+        return userFound;
     }
 
-    deleteUser(id: number) {
-     return this.userRepository.delete({ id })
+    async deleteUser(id: number) {
+        const result = await this.userRepository.delete({ id });
+
+        if(result.affected === 0) {
+            return new HttpException('El Usuario No Existe', HttpStatus.NOT_FOUND);
+        }
+
+        return
     }
 
     updateUser(id: number, user: UpdateUserDto) {

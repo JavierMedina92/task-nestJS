@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm"
+import { Profile } from "./profile.entity"
 
 @Entity({ name: 'users' })
 export class User {
@@ -16,4 +17,8 @@ export class User {
 
     @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date
+
+    @OneToOne(() => Profile)
+    @JoinColumn()
+    profile: Profile
 }

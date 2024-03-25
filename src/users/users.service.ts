@@ -6,7 +6,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { Profile } from './profile.entity';
-import { profile } from 'console';
 
 @Injectable()
 export class UsersService {

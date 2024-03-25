@@ -1,20 +1,19 @@
 import { User } from "src/users/user.entity";
-import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Post {
-    @PrimaryColumn()
-    id: number
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column()
-    tittle: string
+    tittle: string;
 
     @Column()
-    content: string
+    content: string;
 
     @Column()
-    authorId: number
+    authorId: number;
 
     @ManyToOne(() => User, user => user.posts)
     author: User

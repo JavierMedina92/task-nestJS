@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TasksModule } from './tasks/tasks.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Post } from './posts/post.entity';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -16,7 +18,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     synchronize: true
   }),
   TasksModule,
-  UsersModule],
+  UsersModule,
+  PostsModule
+  ],
   controllers: [],
   providers: [],
   
